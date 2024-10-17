@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap5
 from flask_wtf import CSRFProtect
 from models import db, User
 from routes import main
+from user import master
 from config import Config
 from flask_login import LoginManager
 
@@ -33,6 +34,7 @@ def create_app():
     bootstrap = Bootstrap5(app)
     csrf = CSRFProtect()
     app.register_blueprint(main)
+    app.register_blueprint(master)
     return app
 
 

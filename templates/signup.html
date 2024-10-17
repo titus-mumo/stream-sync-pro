@@ -6,7 +6,9 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-    <form method="POST" action="" class="max-w-md w-full">
+    <form method="POST" action="" class="max-w-md w-full mt-12 md:mt-16">
+        <p class="text-start ml-2 mt-1">Welcome to Stream-Sync-Pro 📡!</p>
+        <p class="ml-2">Sign Up</p>
         {{ form.hidden_tag() }}
         <div class="w-full">
             {{ form.username.label(class="px-2 my-1") }}

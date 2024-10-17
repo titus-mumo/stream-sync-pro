@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Home {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="w-full flex justify-center flex-col">
+        <div class="w-full md:w-3/4 flex justify-between flex-row mx-5 self-end mt-2 pl-3">
+            <div class="lg:w-1/4">
+                <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile" class="rounded-full w-40 h-40 object-cover border-4 border-gray-300">
+            </div>
+            <div class="flex flex-col lg:w-1/2">
+                <div class="flex justify-between w-full">
+                    <h1 class="text-center">{% if current_user.is_authenticated%}{{current_user.username}}{% endif%}</h1>
+                    <button>Edit Profile</button><br>
+                    <button>View Archive</button>
+                </div>
+                <div class="flex justify-between w-full">
+                    <p>0 posts</p>
+                    <p>{{ followers }} followers</p>
+                    <p>{{ following }} following</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-between flex-col">
+            <p>Suggested People</p>
+            <div class="flex flex-row">
+                {% if suggested_people %}
+                    {% for suggested_person in suggested_people%}
+                    <div class="flex-col flex justify-between w-36 px-1 m-1 rounded-md border-gray-400 bg-gray-300 shadow-md">
+                        <p class="text-center mb-12"> {{suggested_person.username}}</p>
+                        <form action="{{ url_for('master.follow') }}" method="POST">
+                            <input type="hidden" name="user_id" value="{{ suggested_person.user_id }}">
+                            <button type="submit" class="bg-blue-500 p-0.5 w-full text-white my-1 rounded-md">Follow</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <p>Suggested people to follow will appear here</p>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,23 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Home {% endblock %}
+{% block title %}Profile {% endblock %}
 {% block head %}
   {{ super() }}
-  <style type="text/css">
-    .important { color: #336699; }
-  </style>
 {% endblock %}
 {% block content %}
     <div class="w-full flex justify-center flex-col">
         <h1 class="text-center">Hi {% if current_user.is_authenticated%}{{current_user.username}}{% endif%}! Booster landed safe? Yessir</h1>
-        <a href="/add.html" class="underlined text-blue-500 self-center">Add a new chess piece</a>
         <div class="flex justify-center self-center w-full max-w-sm flex-col ">
-
-            {% for chess_piece in chess_pieces%}
-                <div class="flex justify-between flex-row self-start w-full">
-                    <p>{{ chess_piece.name}}</p>
-                    <p>{{ chess_piece.points}}</p>
-                </div>
-            {% endfor%}
+            <p>Start a live</p>
         </div>
     </div>
 {% endblock %}

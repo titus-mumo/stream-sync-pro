@@ -1,0 +1,1 @@
+###  An innovative application designed to deliver live-streaming services coupled with real-time transcription and language translation.

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, flash, redirect
+from flask import Blueprint, render_template, request, url_for, flash, redirect, session
 from flask_login import login_user, login_required, logout_user
 from models import db, User
 from forms.form import LoginForm, SignUpForm
@@ -21,6 +21,7 @@ def login():
             if user:
                 if user.check_password(password):
                     login_user(user, remember=True)
+                    session['username'] = user.username  
                     flash("Login successful")
                     return redirect( url_for('main.home'))
                 else:
@@ -67,5 +68,6 @@ def home():
 @login_required
 def logout():
     logout_user()
+    session.pop('username', None)
     flash("Logout successful!")
     return redirect(url_for('main.login'))
