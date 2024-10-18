@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Messaging {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="w-full flex justify-center flex-col">
+        <div class="w-full flex justify-between">
+            <p>Chat with {{ username }}</p>
+            <a href="/stream.html" class="underline text-blue-500">Call {{ username }}</a>
+        </div>
+    </div>
+{% endblock %}

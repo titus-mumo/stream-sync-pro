@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %} Profile {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="w-full flex justify-center flex-col">
+        <h3 class="mt-5">Live Streaming</h3>
+        <p id="status"> Connection status will go here</p>
+        <p id="transcript"></p>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+    // Request access to the user's microphone
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+            // Instantiate MediaRecorder after the stream is received
+            const mediaRecorder = new MediaRecorder(stream);
+
+            const socket = new WebSocket(`ws://localhost:5555/listen`);
+
+            socket.onopen = () => {
+                document.querySelector('#status').textContent = 'Connected';
+                console.log('WebSocket connection opened');
+
+                // Start recording and send data via WebSocket
+                mediaRecorder.addEventListener('dataavailable', async (event) => {
+                    if (event.data.size > 0 && socket.readyState === 1) {
+                        socket.send(event.data);
+                    }
+                });
+                mediaRecorder.start(250); // Collect 250ms of data
+            };
+
+            socket.onmessage = (message) => {
+                const received = message.data;
+                if (received) {
+                    console.log(received);
+                    document.querySelector('#transcript').textContent += ' ' + received;
+                }
+            };
+
+            socket.onclose = () => {
+                document.querySelector('#status').textContent = 'Disconnected';
+                console.log('WebSocket connection closed');
+            };
+
+            socket.onerror = (error) => {
+                console.log('WebSocket error:', error);
+            };
+        })
+        .catch((error) => {
+            console.error('Error accessing media devices:', error);
+            document.querySelector('#status').textContent = 'Failed to access microphone';
+        });
+</script>
+
+{% endblock %}

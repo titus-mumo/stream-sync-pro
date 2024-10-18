@@ -3,11 +3,11 @@
   <head>
     {% block head %}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
     <title>{% block title %}{% endblock %} - Stream-Sync-Pro</title>
     {% endblock %}
   </head>
-  <body class="w-full h-screen justify-between flex flex-col items-center">
+  <body class="w-100vw h-screen justify-between flex flex-col items-center">
     <div class="flex w-full flex-col">
         {% if current_user.is_authenticated%}
             <div class="flex justify-between items-center w-full bg-gray-300 p-1">
@@ -35,5 +35,6 @@
           {% endblock %}
         </div>
         </div>
+  {% block js%}{% endblock %}
   </body>
 </html>
