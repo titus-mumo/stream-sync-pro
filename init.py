@@ -7,13 +7,10 @@ from models import db, User
 from views.routes import main
 from views.user import master
 from views.following import follow
-from views.messaging import messaging, websocket_handler
+from views.messaging import messaging
+# from views.messaging import websocket_handler
 from config import Config
 from flask_login import LoginManager
-from quart import Quart
-
-from aiohttp import web
-from aiohttp_wsgi import WSGIHandler
 
 # Initialize Flask-Login
 login_manager = LoginManager()
@@ -53,29 +50,3 @@ def create_app():
 
     return app
 
-# Function to create aiohttp app
-def create_aiohttp_app(flask_app):
-    # Initialize aiohttp app
-    aiohttp_app = web.Application()
-
-    # WSGI handler to integrate Flask with aiohttp
-    wsgi_handler = WSGIHandler(flask_app)
-
-    # Routes for handling Flask and aiohttp
-    aiohttp_app.router.add_route('*', '/{path_info:.*}', wsgi_handler)  # Handles all Flask routes
-    aiohttp_app.router.add_route('GET', '/listen', websocket_handler)   # WebSocket route
-
-    return aiohttp_app
-
-if __name__ == "__main__":
-    print("Starting the app...")
-
-    # Create Flask app
-    flask_app = create_app()
-    print("Flask app created.")
-
-    # Create aiohttp app and run it
-    aiohttp_app = create_aiohttp_app(flask_app)
-    print("Running aiohttp on port 5555...")
-    web.run_app(aiohttp_app, port=5555)
-    print("Server is running on port 5555")

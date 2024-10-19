@@ -6,14 +6,15 @@
 {% block content %}
     <div class="w-full flex justify-center flex-col">
         <h3 class="mt-5">Live Streaming</h3>
-        <p id="status"> Connection status will go here</p>
-        <p id="transcript"></p>
+        <img src="{{ url_for('messaging.videostream') }}" width="90%">
+        <!-- <p id="status"> Connection status will go here</p>
+        <p id="transcript"></p> -->
     </div>
 {% endblock %}
 
 {% block js %}
 
-<script>
+<!-- <script>
     // Request access to the user's microphone
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then((stream) => {
@@ -56,6 +57,6 @@
             console.error('Error accessing media devices:', error);
             document.querySelector('#status').textContent = 'Failed to access microphone';
         });
-</script>
+</script> -->
 
 {% endblock %}
