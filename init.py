@@ -11,6 +11,7 @@ from views.messaging import messaging
 # from views.messaging import websocket_handler
 from config import Config
 from flask_login import LoginManager
+import os
 
 # Initialize Flask-Login
 login_manager = LoginManager()
@@ -49,4 +50,8 @@ def create_app():
     app.register_blueprint(messaging)
 
     return app
+    
 
+if __name__ == "__main__":
+    app = create_app()
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
